@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "start": "node scripts/run_demo.js"
+    "start": "node scripts/run_demo.js en"
   },
   "keywords": [
     "Picovoice",
