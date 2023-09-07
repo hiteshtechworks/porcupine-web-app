@@ -3,6 +3,9 @@ const fs = require("fs");
 const path = require("path");
 const testData = require("../../../resources/.test/test_data.json");
 
+const http = require('http');
+const PORT = process.env.PORT || 5000;
+
 availableLanguages = testData["tests"]["singleKeyword"].map(
   (x) => x["language"]
 );
@@ -114,4 +117,32 @@ const command = (process.platform === "win32") ? "npx.cmd" : "npx";
 
 child_process.fork("http-server", ["-a", "localhost", "-p", "5000"], {
   execPath: command,
+});
+
+const server = http.createServer((req, res) => {
+  let filePath = path.join(__dirname, '../index.html');
+  let contentType = 'text/html';
+
+  fs.readFile(filePath, function (error, content) {
+    if (error) {
+      if (error.code == 'ENOENT') {
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.end('404 Not Found\n');
+      }
+      else {
+        res.writeHead(500);
+        res.end('Sorry, check with the site admin for error: ' + error.code + ' ..\n');
+        res.end();
+      }
+    }
+    else {
+      res.writeHead(200, { 'Content-Type': contentType });
+      res.end(content, 'utf-8');
+    }
+  });
+
+});
+
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
