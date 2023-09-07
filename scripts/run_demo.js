@@ -1,11 +1,11 @@
 const child_process = require("child_process");
 const fs = require("fs");
 const path = require("path");
-const testData = require("../../../resources/.test/test_data.json");
+// const testData = require("../../../resources/.test/test_data.json");
 
-availableLanguages = testData["tests"]["singleKeyword"].map(
-  (x) => x["language"]
-);
+// availableLanguages = testData["tests"]["singleKeyword"].map(
+//   (x) => x["language"]
+// );
 
 const language = 'en';
 if (!language) {
@@ -17,14 +17,14 @@ if (!language) {
   process.exit(1);
 }
 
-if (!availableLanguages.includes(language)) {
-  console.error(
-    `'${language}' is not an available demo language.\nAvailable languages are ${availableLanguages.join(
-      ", "
-    )}`
-  );
-  process.exit(1);
-}
+// if (!availableLanguages.includes(language)) {
+//   console.error(
+//     `'${language}' is not an available demo language.\nAvailable languages are ${availableLanguages.join(
+//       ", "
+//     )}`
+//   );
+//   process.exit(1);
+// }
 
 const version = process.env.npm_package_version;
 const suffix = language === "en" ? "" : `_${language}`;
