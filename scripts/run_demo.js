@@ -47,20 +47,18 @@ if (fs.existsSync(outputDirectory)) {
 }
 
 const keywordJS = [];
-if (language !== "en") {
+if (language === "en") {
   try {
-    const keywords = fs
-      .readdirSync(keywordDir)
-      .filter((f) => path.extname(f) === ".ppn");
+    const keywords = fs.readdirSync(keywordDir).filter((f) => path.extname(f) === ".ppn");
 
     keywords.forEach((k) => {
       fs.copyFileSync(path.join(keywordDir, k), path.join(outputDirectory, k));
       keywordJS.push(`  {
-    label: "${k.replace("_wasm.ppn", "").replace("_", " ")}",
-    sensitivity: 0.7,
-    publicPath: "keywords/${k}",    
-    customWritePath: "${version}_${k}",
-  },`);
+        label: "${k.replace("_wasm.ppn", "").replace("_", " ")}",
+        sensitivity: 0.7,
+        publicPath: "keywords/${k}",    
+        customWritePath: "${version}_${k}",
+      },`);
     });
   } catch (error) {
     console.error(error);
